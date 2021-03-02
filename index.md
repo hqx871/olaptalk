@@ -4,7 +4,6 @@
 
 ## 相关概念
 
-下图中，虚线包围的方块代表SubPlan，其中的方块代表Pipeline/Operator。
 ![任务调度图](pic-presto-scheduler.png)
 
 ### Query

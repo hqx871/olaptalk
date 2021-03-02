@@ -20,7 +20,7 @@ stage由StageScheduler负责调度。stage的调度有两种策略:
 
 ### Task/Pipeline
 StageScheduler会将stage衍生成多个并行执行的task任务。task下发到worker后，由TaskScheduler负责调度。
-调度逻辑不同于spark，spark是将每个task任务运行结束现执行下一个task，执行过程中占用一个线程。而presto会将task分成多个pipeline，由driver执行。pipeline的调度过程类似于**操作系统的进度调度，任务执行一次只处理一个page**，执行中可能由于资源不到位或者数据未就绪而被block，从而可以在每个operator中退出。处理完一个page后被放回任务队列等待下次时间片。
+调度逻辑不同于spark，spark是将每个task任务运行结束现执行下一个task，执行过程中占用一个线程。而presto会将task分成多个pipeline，由driver执行。pipeline的调度过程类似于**操作系统的进度调度，任务每次只处理一个page**，执行中可能由于资源不到位或者数据未就绪而被block，从而可以在每个operator中退出。处理完一个page后被放回任务队列等待下次时间片。
 这种更细粒度的调度可以使得每个查询都得到充分的执行，所以官方推荐中说明可以通过增加cpu的方式减少查询延迟。
 另外，这种presto会统计task每次执行的时长，将运行时间长的任务划分到低优先级，时间少的划到高优化级，从而保证了快得到更多的资源，因为presto认为查询用时越少的任务优先级越高。
 

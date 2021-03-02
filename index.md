@@ -15,7 +15,7 @@
 QueryScheduler会将Query Plan划分成多个Stage。分成Leaf State和Immediate Stage两类。Presto为了提高查询的效率，默认会将集群中所有的worker节点都会参与leaf stage阶段的任务，因为查询中数据读取的解压/解码过程是最耗时的，但如果数据源是shared nothing类型的，数据读取任务只会下发到数据结点。对于immediate stage，presto会选择一部分worker参与计算。
 stage由StageScheduler负责调度。stage的调度有两种策略:
 - all-at-once: 直接将所有的stage的任务下发到worker，形成数据处理的拓扑图。这种调度策略适合adhoc类要求响应快的场景。
-- phased: 先将有循环依赖stage合成一个结点，得到有向无环图，然后根据任意的拓扑排序调度。这种策略适合etl类对资源敏感，需要长时间运行的场景。
+- phased: 先将有循环依赖的stage合成一个结点，得到有向无环图，然后根据任意的拓扑排序调度。这种策略适合etl类对资源敏感，需要长时间运行的场景。
 
 ### Task/Pipeline
 StageScheduler会将stage衍生成多个并行执行的task任务。task下发到worker后，由TaskScheduler负责调度。

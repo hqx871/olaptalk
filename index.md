@@ -9,11 +9,11 @@
 
 ### Query
 
-对应提交的一条SQL查询语句，同级概念实体有DAG, QueryScheduler
+对应提交的一条SQL查询语句，由QueryScheduler负责调度。
 
 ### Stage
 
-QueryScheduler会将QueryPlan划分成多个Stage。分成Leaf State和Immediate Stage两类。
+QueryScheduler会将QueryPlan划分成多个Stage。分成Leaf State和Immediate Stage两类。Presto为了提高查询的效率，默认会将集群中所有的worker节点都会参与leaf stage阶段的任务，因为查询中数据读取的解压/解码过程是最耗时的，但如果数据源是shared nothing类型的，数据读取任务只会下发到数据结点。对于immediate stage，presto会选择一部分worker参与计算。
 
 ### Task
 

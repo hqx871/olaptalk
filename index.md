@@ -4,7 +4,7 @@
 
 ## 相关概念
 
-![任务调度图](pic-presto-scheduler.png)
+![任务调度图](static/pic-presto-scheduler.png)
 
 ### Query
 

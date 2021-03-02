@@ -1,6 +1,6 @@
 ## Presto任务调度
 
-You can use the [editor on GitHub](https://github.com/hqx871/olaptalk/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+网上有很多关于MR、Spark的任务调度讨论，Presto的相关介绍确实很少. 本文希望抛砖引玉，大家一起讨论Presto的任务调度的设计与实现
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 

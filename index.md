@@ -1,10 +1,17 @@
 ## Presto任务调度
 
-网上有很多关于MR、Spark的任务调度讨论，Presto的相关介绍却很少. 本文希望抛砖引玉，大家一起讨论Presto的任务调度的设计与实现
+网上有很多关于MR、Spark的任务调度讨论，Presto的相关介绍却很少. 本文抛砖引玉，希望大家一起讨论Presto的任务调度的设计与实现
 
-![Image](pic-presto-scheduler.png)
+## 相关概念
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+下图中，虚线包围的方块代表SubPlan，其中的方块代表Operator。
+![任务调度图](pic-presto-scheduler.png)
+
+### Query
+
+### Stage
+
+### Task
 
 ### Markdown
 

@@ -9,7 +9,11 @@
 
 ### Query
 
+对应提交的一条SQL查询语句，同级概念实体有DAG, QueryScheduler
+
 ### Stage
+
+QueryScheduler会将QueryPlan划分成多个Stage。分成Leaf State和Immediate Stage两类。
 
 ### Task
 

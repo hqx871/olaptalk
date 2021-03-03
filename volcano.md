@@ -70,7 +70,7 @@ Filter implement Operator{
 ```java
 Project implement Operator{
    Operator input;
-   Function<Tuple,Tuple> mapFunction;
+   MapFunction mapFunction;
    public void open(){
       input.open();
    }
@@ -92,7 +92,7 @@ Project implement Operator{
 ```java
 Aggregation implement Operator{
    Operator input;
-   Function<Tuple,Object> keyFunction;
+   KeyFunction keyFunction;
    AggCallList aggCalls;
    HashTable<Object, List<AggState>> hashTable;
    Iterator<Tuple> reduceIterator;
@@ -109,7 +109,9 @@ Aggregation implement Operator{
          }
          aggCalls.combine(state, tuple);
       }
-      reduceIteratur = hashTable.values().map(state->aggCalls.reduce(state)).iterator();
+      reduceIteratur = hashTable.values()
+         .map(state->aggCalls.reduce(state))
+         .iterator();
    }
    
    public Tuple next(){
@@ -128,15 +130,19 @@ Aggregation implement Operator{
 ```java
 Driver {
    public static void main(String[] args){
-      Operator op = new TableScan(new TableData("lineitem"));
-      op = new Filter(new Predicate("l_shipdate <= date '1998-12-01' - interval '90' day"));
-      op = new Project(new Function("[l_returnflat, l_linesatus, l_extendedprice, l_extendedprice*(1-l_discount)...]"));
-      op = new Aggregation(new Function("[l_returnflat, l_linesatus]"),new AggCallList("[sum(l_extendedprice), sum(l_extendedprice*(1-l_discount))...]"));
-      op.open();
+      Operator operator = new TableScan(new TableData("lineitem"));
+      operator = new Filter(new Predicate("l_shipdate <= date '1998-12-01' - interval '90' day"));
+      operator = new Project(new MapFunction("[l_returnflat, l_linesatus, l_extendedprice, l_extendedprice*(1-l_discount)...]"));
+      operator = new Aggregation(new KeyFunction("[l_returnflat, l_linesatus]"),
+               new AggCallList("[sum(l_extendedprice), sum(l_extendedprice*(1-l_discount))...]")
+         );
+      
+      //open->read->close
+      operator.open();
       while(op.next()!=END){
-         op.next();
+         operator.next();
       }
-      op.close();
+      operator.close();
    }
 }
 ```

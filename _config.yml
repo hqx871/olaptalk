@@ -1,2 +1,4 @@
 theme: jekyll-theme-architect
 post_asset_folder: true
+# Google Analytics
+google_analytics: G-PE08H808NJ

@@ -104,15 +104,10 @@ Aggregation implement Operator{
          Object key = keyFunction.apply(tuple);
          List<AggState> state = hashTable.get(key);
          if(state==null){
-            state = new ArrayList<>();
-            for(AggCall agg:aggCalls){
-               state.add(agg.init());
-            }
+            state = aggCalls.init();
             hashTable.put(key, state);
          }
-         for(int i=0;i<aggCalls.size();i++){
-            aggCalls.get(i).combine(state.get(i), tuple);
-         }
+         aggCalls.combine(state, tuple);
       }
       reduceIteratur = hashTable.values().map(state->aggCalls.reduce(state)).iterator();
    }

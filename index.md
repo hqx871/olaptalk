@@ -29,5 +29,5 @@ StageScheduler会将stage衍生成多个并行执行的task任务。task下发�
 另外，这种presto会统计task每次执行的时长，将运行时间长的任务划分到低优先级，时间少的划到高优化级，从而保证了快得到更多的资源，因为presto认为查询用时越少的任务优先级越高。
 
 ### Split
-类似MR/spark中的split，presto也是将表或者分区分成成多个split。但presto在调度split时，是动态将split下发到driver的任务队列中，下发过程会根据driver的负载动态调整，可以解决某些查询的数据倾斜问题。
+类似MR/spark中的split，presto也是将表或者分区分成多个split。但presto在调度split时，是动态将split下发到driver的任务队列中，下发过程会根据driver的负载动态调整，可以解决某些查询的数据倾斜问题。
 

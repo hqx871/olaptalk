@@ -42,3 +42,26 @@ TableScan implement Operator{
   }
 }
 ```
+
+### Filter
+```
+Filter implement Operator{
+   Operator input;
+   Predicate predicate;
+   
+   public void open(){
+      input.open();
+   }
+   
+   public Tuple next(){
+      Tuple tuple = input.next();
+      while(tuple != END && !predicate.test(tuple)){
+         tuple = input.next();
+      }
+      return tuple;
+   }
+   public void close(){
+      input.close;
+   }
+}
+```

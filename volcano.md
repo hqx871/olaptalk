@@ -131,11 +131,24 @@ Aggregation implement Operator{
 Driver {
    public static void main(String[] args){
       Operator operator = new TableScan(new TableData("lineitem"));
-      operator = new Filter(new Predicate("l_shipdate <= date '1998-12-01' - interval '90' day"));
-      operator = new Project(new MapFunction("[l_returnflat, l_linesatus, l_extendedprice, l_extendedprice*(1-l_discount)...]"));
-      operator = new Aggregation(new KeyFunction("[l_returnflat, l_linesatus]"),
-               new AggCallList("[sum(l_extendedprice), sum(l_extendedprice*(1-l_discount))...]")
-         );
+      operator = new Filter(new Predicate(
+         "l_shipdate <= date '1998-12-01' - interval '90' day"
+      ));
+      operator = new Project(new MapFunction(
+               [
+                  "l_returnflat", 
+                  "l_linesatus", 
+                  "l_extendedprice", 
+                  "l_extendedprice*(1-l_discount)"
+                  ...
+               ]));
+      operator = new Aggregation(new KeyFunction(["l_returnflat", "l_linesatus"]),
+               new AggCallList(
+               [
+                  "sum(l_extendedprice)", 
+                  "sum(l_extendedprice*(1-l_discount))"
+                  ...
+               ]));
       
       //open->read->close
       operator.open();

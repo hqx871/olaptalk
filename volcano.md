@@ -128,3 +128,20 @@ Aggregation implement Operator{
    }
 }
 ```
+
+### Driver
+```java
+class Driver {
+   public static void main(String[] args){
+      Operator op = new TableScan(new TableData('lineitem'));
+      op = new Filter(new Predicate("l_shipdate <= date '1998-12-01' - interval '90' day"));
+      op = new Project(new Function("[l_returnflat, l_linesatus, l_extendedprice, l_extendedprice*(1-l_discount)...]"));
+      op = new Aggregation(new Function("[l_returnflat, l_linesatus]"),new AggCallList("[sum(l_extendedprice), sum(l_extendedprice*(1-l_discount))...]"));
+      op.open();
+      while(op.next()!=END){
+         op.next();
+      }
+      op.close();
+   }
+}
+```

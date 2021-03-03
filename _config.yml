@@ -1,4 +1,8 @@
 theme: jekyll-theme-architect
 post_asset_folder: true
 # Google Analytics
+jekyll_analytics:
+  GoogleAnalytics:          # Add, if you want to track with Google Analytics
+    id: G-PE08H808NJ        # Required - replace with your tracking id
+    anonymizeIp: false      # Optional - Default: false - set to true for anonymized tracking
 google_analytics: G-PE08H808NJ

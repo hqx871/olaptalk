@@ -9,7 +9,7 @@ volcano是最经典的数据库查询处理模型，许多数据库如mysql等�
 
 ### Operator算子抽象
 ```java
-interface Operator{
+Operator{
    void open();
    Tuple next();
    void close();
@@ -131,7 +131,7 @@ Aggregation implement Operator{
 
 ### Driver
 ```java
-class Driver {
+Driver {
    public static void main(String[] args){
       Operator op = new TableScan(new TableData('lineitem'));
       op = new Filter(new Predicate("l_shipdate <= date '1998-12-01' - interval '90' day"));

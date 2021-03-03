@@ -44,7 +44,7 @@ TableScan implement Operator{
 ```
 
 ### Filter
-```
+```java
 Filter implement Operator{
    Operator input;
    Predicate predicate;
@@ -67,7 +67,7 @@ Filter implement Operator{
 ```
 
 ### Projection
-```
+```java
 Project implement Operator{
    Operator input;
    Function<Tuple,Tuple> mapFunction;
@@ -89,7 +89,7 @@ Project implement Operator{
 ```
 
 ### Aggregation
-```
+```java
 Aggregation implement Operator{
    Operator input;
    Function<Tuple,Object> keyFunction;

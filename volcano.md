@@ -93,7 +93,7 @@ Project implement Operator{
 Aggregation implement Operator{
    Operator input;
    Function<Tuple,Object> keyFunction;
-   List<AggCall> aggCalls;
+   AggCallList aggCalls;
    HashTable<Object, List<AggState>> hashTable;
    Iterator<Tuple> reduceIterator;
    public void open(){
@@ -114,7 +114,7 @@ Aggregation implement Operator{
             aggCalls.get(i).combine(state.get(i), tuple);
          }
       }
-      reduceIteratur = hashTable.values().map(state->state.reduce()).iterator();
+      reduceIteratur = hashTable.values().map(state->aggCalls.reduce(state)).iterator();
    }
    
    public Tuple next(){

@@ -65,3 +65,66 @@ Filter implement Operator{
    }
 }
 ```
+
+### Projection
+```
+Project implement Operator{
+   Operator input;
+   Function<Tuple,Tuple> mapFunction;
+   public void open(){
+      input.open();
+   }
+   
+   public Tuple next(){
+      Tuple tuple = input.next();
+      if(tuple!=END){
+        return mapFunction.apply(tuple);
+      }
+      return END;
+   }
+   public void close(){
+      input.close();
+   }
+}
+```
+
+### Aggregation
+```
+Aggregation implement Operator{
+   Operator input;
+   Function<Tuple,Object> keyFunction;
+   List<AggCall> aggCalls;
+   HashTable<Object, List<AggState>> hashTable;
+   Iterator<Tuple> reduceIterator;
+   public void open(){
+      input.open();
+      
+      Tuple tuple = input.next();
+      while(tuple!=END){
+         Object key = keyFunction.apply(tuple);
+         List<AggState> state = hashTable.get(key);
+         if(state==null){
+            state = new ArrayList<>();
+            for(AggCall agg:aggCalls){
+               state.add(agg.init());
+            }
+            hashTable.put(key, state);
+         }
+         for(int i=0;i<aggCalls.size();i++){
+            aggCalls.get(i).combine(state.get(i), tuple);
+         }
+      }
+      reduceIteratur = hashTable.values().map(state->state.reduce()).iterator();
+   }
+   
+   public Tuple next(){
+      if(!reduceIterator.hasNext()){
+         return END;
+      }
+      return reduceIterator.next();
+   }
+   public void close(){
+      input.close();
+   }
+}
+```
